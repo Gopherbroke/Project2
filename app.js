@@ -4,11 +4,26 @@ var server  = require('http').createServer(app);
 var port    = process.env.PORT || 3000;
 var bodyParser = require("body-parser");
 var mongoose = require('mongoose');
-var Recipe = require('./models/recipe')
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var Recipe = require('./models/recipe');
+var User = require('./models/user')
 
 mongoose.connect('mongodb://localhost/project2');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
+
+// PASSPORT CONFIGURATION
+app.use(require('express-session')({
+  secret: 'This is a secret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 
@@ -78,6 +93,28 @@ function quit() {
   mongoose.disconnect();
   console.log('Quitting!');
 }
+
+// AUTH ROUTES
+
+//Show register form
+app.get('/register', function(req, res){
+  res.render('register');
+});
+
+//Handle signup logic
+app.post('/register', function(req, res) {
+  var newUser = new User({username: req.body.username});
+  User.register(newUser, req.body.password, function(err, user) {
+    if(err) {
+      console.log(err);
+      return res.render('register')
+    }
+    passport.authenticate('local')(req, res, function() {
+      res.redirect('/recipes');
+    });
+  });
+});
+
 
 app.listen(port);
   console.log("Server up and running on " + port);
