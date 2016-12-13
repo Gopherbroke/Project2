@@ -11,11 +11,16 @@
     </div>
     </header>
 
-
-    <% recipes.forEach( function(recipes) { %>
-      <li>
-        <%= recipes.name %>
-      </li>
-    <% }); %>
+    <div>
+      <% recipes.forEach(function(recipe) { %>
+        <div class= 'caption'>
+          <h4><%= recipe.dish %></h4>
+          <h4><%= recipe.name %></h4>
+          <p>
+            <a href='/recipes/<%= recipe._id %>' class='btn btn-primary'>More Info</a>
+          </p>
+        </div>
+      <% }); %>
+    </div>
   </div>
 <% include partials/footer %>

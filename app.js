@@ -4,25 +4,20 @@ var server  = require('http').createServer(app);
 var port    = process.env.PORT || 3000;
 var bodyParser = require("body-parser");
 var mongoose = require('mongoose');
-
+var Recipe = require('./models/recipe')
 
 mongoose.connect('mongodb://localhost/project2');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 
 
-var recipeSchema = new mongoose.Schema({
-  name: String
-});
-
-var Recipe = mongoose.model('Recipe', recipeSchema);
-
 
 var recipes = [
-  { name: 'Ham' },
-  { name: 'Macarroni' },
-  { name: 'Deviled Eggs' }
+  // { name: 'Ham' },
+  // { name: 'Macarroni' },
+  // { name: 'Deviled Eggs' }
 ];
+
 
 
 app.get('/', function(req, res) {
@@ -42,37 +37,39 @@ app.get('/recipes', function(req, res) {
   });
 });
 
-//Create
-app.post('/recipes', function( req, res) {
+
+//Create- add new recipe to DB
+app.post('/recipes', function(req, res) {
   // Get data from form and add to recipes array
+  var dish = req.body.dish;
   var name = req.body.name;
-  var newRecipe = {name: name}
+  var newRecipe = {dish: dish, name: name}
   //Create a new recipe and save to database
-  // Recipe.create(newRecipe, function(err, newlyCreated) {
-  //   if(err) {
-  //     console.log(err);
-  //     } else {
-  //       // Redirect back to recipes page
-  //       res.redirect('/recipes');
-  //     }
-  //   });
+  Recipe.create(newRecipe, function(err, newlyCreated) {
+    if(err) {
+      console.log(err);
+      } else {
+        // Redirect back to recipes page
+        res.redirect('/recipes');
+      }
+    });
   });
 
 
 // New Recipe Form
 app.get('/recipes/new', function(req, res) {
   res.render('new');
-})
+});
 
 
 //Show more informtation about one recipe
 app.get('/recipes/:id', function(req, res) {
-  Recipe.findById(req.params.id, function( err, foundRecipe) {
+ Recipe.findById(req.params.id, function( err, foundRecipe) {
     if(err) {
       console.log(err);
     } else {
-      //res.render('partials/show' {recipes: foundRecipe});
-    console.log(banana);
+      res.render('show', {recipes: foundRecipe});
+    //console.log('banana');
     }
   });
 });
