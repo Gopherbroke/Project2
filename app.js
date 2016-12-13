@@ -26,7 +26,7 @@ var recipes = [
 
 
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Potluck' });
+  res.render('main.ejs', { title: 'Potluck' });
 });
 
 
@@ -37,37 +37,44 @@ app.get('/recipes', function(req, res) {
     if(err) {
       console.log(err);
     } else {
-      res.render('Recipes', {recipes: allRecipes});
+      res.render('index', {recipes: allRecipes});
     }
   });
 });
 
-// Create
+//Create
 app.post('/recipes', function( req, res) {
   // Get data from form and add to recipes array
   var name = req.body.name;
   var newRecipe = {name: name}
   //Create a new recipe and save to database
-  Recipe.create(newRecipe, function(err, newlyCreated) {
-    if(err) {
-      console.log(err);
-      } else {
-        // Redirect back to recipes page
-        res.redirect('/recipes');
-      }
-    });
+  // Recipe.create(newRecipe, function(err, newlyCreated) {
+  //   if(err) {
+  //     console.log(err);
+  //     } else {
+  //       // Redirect back to recipes page
+  //       res.redirect('/recipes');
+  //     }
+  //   });
   });
 
 
 // New Recipe Form
 app.get('/recipes/new', function(req, res) {
-  res.render('new.ejs');
+  res.render('new');
 })
 
 
-app.send('/recipes/:id', function(req, res) {
-  //Find a certain recipe
-  res.send('Future Show Page');
+//Show more informtation about one recipe
+app.get('/recipes/:id', function(req, res) {
+  Recipe.findById(req.params.id, function( err, foundRecipe) {
+    if(err) {
+      console.log(err);
+    } else {
+      //res.render('partials/show' {recipes: foundRecipe});
+    console.log(banana);
+    }
+  });
 });
 
 function quit() {

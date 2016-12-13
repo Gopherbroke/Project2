@@ -1,9 +1,21 @@
 <% include partials/header %>
 
-<h1>Index Page</h1>
+  <div class= 'container'>
+    <header class= 'jumbotron'>
+      <div class= 'container'>
+        <h1>Potluck Recipes</h1>
 
-<p>Welcome to the index page</p>
+        <p>
+            <a class= 'btn btn-primary btn-large' href='/recipes/new'>Add A New Recipe</a>
+        </p>
+    </div>
+    </header>
 
-<a href='/recipes'> View all recipes</a>
 
+    <% recipes.forEach( function(recipes) { %>
+      <li>
+        <%= recipes.name %>
+      </li>
+    <% }); %>
+  </div>
 <% include partials/footer %>
