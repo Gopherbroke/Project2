@@ -25,6 +25,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+})
+
 
 
 var recipes = [
@@ -40,10 +45,10 @@ app.get('/', function(req, res) {
 });
 
 
-// Index
+// Index- show all recipes
 app.get('/recipes', function(req, res) {
   //Get all recipes from database
-  Recipe.find({}, function( err, allRecipes) {
+  Recipe.find({}, function(err, allRecipes) {
     if(err) {
       console.log(err);
     } else {
@@ -54,7 +59,7 @@ app.get('/recipes', function(req, res) {
 
 
 //Create- add new recipe to DB
-app.post('/recipes', function(req, res) {
+app.post('/recipes', isLoggedIn, function(req, res) {
   // Get data from form and add to recipes array
   var dish = req.body.dish;
   var name = req.body.name;
@@ -115,6 +120,30 @@ app.post('/register', function(req, res) {
   });
 });
 
+//handling login logic
+app.post('/login', passport.authenticate('local',
+  {successRedirect: '/recipes',
+  failureRedirect: '/login'
+  }), function(req, res) {
+});
+
+//Show login form
+app.get('/login', function(req, res) {
+  res.render('login');
+});
+
+//logout router
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/recipes');
+});
+
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
 
 app.listen(port);
   console.log("Server up and running on " + port);
