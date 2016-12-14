@@ -1,7 +1,6 @@
 <% include ./partials/header %>
 
-<h1>Show Template</h1>
-
-<p><%=recipes.name%></p>
+<h1><%= recipe.dish%></h1>
+<p>Owner: <%=recipe.user ? recipe.user.username : 'Unknown' %></p>
 
 <% include ./partials/footer %>
