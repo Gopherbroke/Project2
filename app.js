@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var server  = require('http').createServer(app);
-var port    = process.env.PORT || 3000;
+//var port    = process.env.PORT || 3000;
 var bodyParser = require("body-parser");
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -14,10 +14,30 @@ var User = require('./models/user');
 var recipeRoutes = require('./routes/recipes');
 var authRoutes = require('./routes/auth')
 
-mongoose.connect('mongodb://localhost/project2');
+
+// Connect to database
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI);
+}
+else {
+  mongoose.connect('mongodb://localhost/project2');
+}
+mongoose.connection.on('error', function(err) {
+  console.error('MongoDB connection error: ' + err);
+  process.exit(-1);
+  }
+);
+mongoose.connection.once('open', function() {
+  console.log("Mongoose has connected to MongoDB!");
+});
+
+//mongoose.connect('mongodb://localhost/project2');
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
+app.use(express.static(__dirname + '/public'));
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
@@ -41,10 +61,10 @@ app.use(function(req, res, next) {
 app.use(authRoutes);
 app.use(recipeRoutes);
 
-app.listen(port);
+/*app.listen(port);
   console.log("Server up and running on " + port);
 
-console.log('Server started on ' + port);
+console.log('Server started on ' + port); */
 
 // function quit() {
 //   mongoose.disconnect();

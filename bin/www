@@ -5,7 +5,11 @@
  */
 
 var app = require('../app');
+<<<<<<< HEAD
 var debug = require('debug')('todos:server');
+=======
+var debug = require('debug')('wdicalendarexplorer:server');
+>>>>>>> fe2d98a83e78dfb09dd9c6f09c1ec92eda8c345d
 var http = require('http');
 
 /**
@@ -14,7 +18,10 @@ var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+<<<<<<< HEAD
 
+=======
+>>>>>>> fe2d98a83e78dfb09dd9c6f09c1ec92eda8c345d
 /**
  * Create HTTP server.
  */
