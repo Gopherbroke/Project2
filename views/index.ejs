@@ -14,8 +14,8 @@
     <div>
       <% recipes.forEach(function(recipe) { %>
         <div class= 'caption'>
-          <h4><%= recipe.dish %></h4>
-          <h4>Owner: <%=recipe.username%></h4>
+          <h2><%= recipe.dish %></h2>
+          <h4>Owner: <%=recipe.user ? recipe.user.username : 'Unknown'%></h4>
           <p>
             <a href='/recipes/<%= recipe._id %>' class='btn btn-sm btn-primary'>More Info</a>
           </p>

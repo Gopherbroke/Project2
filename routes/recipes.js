@@ -5,20 +5,27 @@ var methodOverride = require('method-override');
 
 var recipes = [];
 
+
+
+
+
+
+
+
 // Index- show all recipes
 router.get('/recipes', function(req, res, next) {
   var recipes = []
   //Get all recipes from database
   Recipe.find({}).populate('user')
   .then(function(allRecipes) {
-    res.render('index', {recipes: allRecipes} );
+    res.render('index', {recipes: allRecipes});
   })
   .catch(function(err) {
     return next(err);
   });
 });
 
-//var recipes = [];
+
 
 
 
