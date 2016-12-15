@@ -9,6 +9,7 @@ var LocalStrategy = require('passport-local');
 var methodOverride = require('method-override');
 var Recipe = require('./models/recipe');
 var User = require('./models/user');
+var port = process.env.PORT || 8080;
 
 //Requiring routes
 var recipeRoutes = require('./routes/recipes');
@@ -60,6 +61,10 @@ app.use(function(req, res, next) {
 
 app.use(authRoutes);
 app.use(recipeRoutes);
+
+app.listen(port, function() {
+  console.log('Our app is running on http://localhost:' + port);
+});
 
 /*app.listen(port);
   console.log("Server up and running on " + port);
