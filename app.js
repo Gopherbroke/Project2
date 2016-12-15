@@ -61,10 +61,10 @@ app.use(function(req, res, next) {
 app.use(authRoutes);
 app.use(recipeRoutes);
 
-app.listen(port);
+/*app.listen(port);
   console.log("Server up and running on " + port);
 
-console.log('Server started on ' + port);
+console.log('Server started on ' + port); */
 
 // function quit() {
 //   mongoose.disconnect();

@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "Start": 'node./bin/www'
+    "Start": "node ./bin/www"
   },
   "author": "",
   "license": "ISC",
