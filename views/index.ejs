@@ -6,7 +6,7 @@
         <h1>Potluck Recipes</h1>
 
         <p>
-            <a class= 'btn btn-primary btn-large' href='/recipes/new'>Add A New Recipe</a>
+            <a class= 'btn btn-lg btn-primary' href='/recipes/new'>Add A New Recipe</a>
         </p>
     </div>
     </header>
@@ -15,9 +15,9 @@
       <% recipes.forEach(function(recipe) { %>
         <div class= 'caption'>
           <h4><%= recipe.dish %></h4>
-          <h4><%= recipe.name %></h4>
+          <h4>Owner: <%=recipe.username%></h4>
           <p>
-            <a href='/recipes/<%= recipe._id %>' class='btn btn-primary'>More Info</a>
+            <a href='/recipes/<%= recipe._id %>' class='btn btn-sm btn-primary'>More Info</a>
           </p>
         </div>
       <% }); %>

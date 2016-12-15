@@ -3,6 +3,7 @@ var username = require('../routes/auth');
 
 var recipeSchema = new mongoose.Schema({
   dish: String,
+  description: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

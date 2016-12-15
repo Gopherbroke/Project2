@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
+var methodOverride = require('method-override');
 var Recipe = require('./models/recipe');
 var User = require('./models/user');
 
@@ -16,6 +17,7 @@ var authRoutes = require('./routes/auth')
 mongoose.connect('mongodb://localhost/project2');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
