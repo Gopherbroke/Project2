@@ -37,6 +37,7 @@ mongoose.connection.once('open', function() {
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
+app.use(express.static(__dirname + '/public'));
 
 // PASSPORT CONFIGURATION
 app.use(require('express-session')({
