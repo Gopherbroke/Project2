@@ -1,14 +1,14 @@
 <% include ./partials/header %>
+  <div class="container">
+  <h1><%= recipe.dish%></h1>
+    <h2>Owner: <%=recipe.user ? recipe.user.username : 'Unknown'%></h2>
+      <h4>Description: <%=recipe.description%></h4>
 
-<h1><%= recipe.dish%></h1>
-<h2>Owner: <%=recipe.user ? recipe.user.username : 'Unknown'%></h2>
-<h4>Description: <%=recipe.description%></h4>
 
-
-<form id='delete-form' action='/recipes/<%=recipe._id%>?_method=DELETE' method='POST'>
-<a class= 'btn btn-sm btn-warning' href='/recipes/<%= recipe._id %>/edit'>Edit</a>
-<button class='btn btn-sm btn-danger'>Delete</button>
-</form>
-
+        <form id='delete-form' action='/recipes/<%=recipe._id%>?_method=DELETE' method='POST'>
+          <a class= 'btn btn-sm btn-warning' href='/recipes/<%= recipe._id %>/edit'>Edit</a>
+            <button class='btn btn-sm btn-danger'>Delete</button>
+        </form>
+</div>
 
 <% include ./partials/footer %>

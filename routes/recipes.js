@@ -41,26 +41,12 @@ router.post('/recipes', isLoggedIn, function(req, res) {
     name: name,
     description: description
   };
-  // recipes.push(newRecipe);
-  // res.redirect('/recipes');
+
   //Create a new recipe and save to database
   Recipe.create(newRecipe, isLoggedIn, function(err, newlyCreated) {
     if(err) {
       console.log(err);
       } else {
-        // Recipe.create(req.body.recipe, function(err, recipe) {
-        //   if(err) {
-        //     console.log(err);
-        //  } else {
-            // Recipe.name.id = req.user._id;
-            // Recipe.name.username = req.user.username;
-            // Recipe.save();
-            // recipes.Recipe.push(recipe);
-            // recipes.save();
-          //   res.redirect('/recipes');
-          // }
-      //  })
-        // Redirect back to recipes page
         res.redirect('/recipes');
       }
     });
